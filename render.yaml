@@ -1,0 +1,37 @@
+# Render 一键部署配置
+# 使用方法：
+# 1. 把代码上传到 GitHub
+# 2. 在 Render  Dashboard 点击 "New" → "Web Service"
+# 3. 连接你的 GitHub 仓库
+# 4. Render 会自动识别本文件，预填所有配置
+# 5. 只需在环境变量中填入 BOT_TOKEN 和 SUPER_ADMIN_ID
+# 6. 点击 "Deploy" 即可
+
+services:
+  - type: web
+    name: tg-order-bot
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    healthCheckPath: /
+    envVars:
+      - key: RUN_MODE
+        value: webhook
+      - key: WEBHOOK_PATH
+        value: /webhook
+      - key: PYTHON_VERSION
+        value: 3.11.4
+      # 以下变量需要你在 Render 面板中手动填入（sync: false 表示不与代码同步）
+      - key: BOT_TOKEN
+        sync: false
+      - key: SUPER_ADMIN_ID
+        sync: false
+      # 可选：余额查询 API（不填则用模拟数据）
+      - key: BALANCE_API_URL
+        sync: false
+      - key: BALANCE_API_KEY
+        sync: false
+      # 可选：付款链接
+      - key: PAYMENT_URL_TEMPLATE
+        sync: false

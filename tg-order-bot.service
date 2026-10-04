@@ -1,0 +1,19 @@
+[Unit]
+Description=TG 靓号订单管理机器人
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/tg-order-bot
+Environment="BOT_TOKEN=你的BotToken"
+Environment="SUPER_ADMIN_ID=你的数字ID"
+Environment="RUN_MODE=polling"
+ExecStart=/home/ubuntu/tg-order-bot/venv/bin/python /home/ubuntu/tg-order-bot/bot.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
